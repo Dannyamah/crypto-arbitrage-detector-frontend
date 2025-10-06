@@ -1,38 +1,187 @@
-.App {
-  text-align: center;
+
+:root {
+  --bg: #f6fbff;
+  --card-bg: #ffffff;
+  --text: #0f1723;
+  --muted: #6b7280;
+  --accent: #0d6efd;
+  --success: #198754;
+  --danger: #dc3545;
+  --surface: #ffffff;
+  --border: #e6eefb;
+  --table-row: #ffffff;
+  --glass: rgba(255,255,255,0.6);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+[data-theme='dark'] {
+  --bg: #0b1220;
+  --card-bg: #071127;
+  --text: #e6eef8;
+  --muted: #9aa6bb;
+  --accent: #58a6ff;
+  --success: #2ecc71;
+  --danger: #ff6b6b;
+  --surface: #071127;
+  --border: rgba(255,255,255,0.04);
+  --table-row: rgba(255,255,255,0.02);
+  --glass: rgba(255,255,255,0.04);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-wrapper {
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg) 100%);
   min-height: 100vh;
+  color: var(--text);
+  font-family: Inter, 'Segoe UI', Roboto, system-ui, -apple-system, 'Helvetica Neue', Arial;
+}
+
+.app-container {
+  padding: 18px;
+}
+
+.sidebar {
+  padding: 0 12px 12px 12px;
+}
+
+.main-content {
+  padding: 0 12px 12px 12px;
+}
+
+.metric-list {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+}
+
+.metric-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.metric-title {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.metric-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.table-highlight {
+  background: linear-gradient(90deg, rgba(13,110,253,0.06), rgba(13,110,253,0.02));
+}
+
+.best-opp-card {
+  border-left: 6px solid var(--accent);
+  box-shadow: 0 6px 18px rgba(13,110,253,0.06);
+  background: linear-gradient(180deg, var(--surface), var(--glass));
+}
+
+.big-number {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.token-name {
+  font-weight: 600;
+}
+
+.profit-table th {
+  background: transparent;
+  color: var(--muted);
+}
+
+.profit-table.attractive tbody tr:nth-child(odd) {
+  background: var(--table-row);
+}
+
+.profit-table.attractive tbody tr {
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.profit-table.attractive tbody tr:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(2,6,23,0.06);
+}
+
+.theme-toggle {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.app-update-strip {
+  background: linear-gradient(90deg, rgba(13,110,253,0.06), rgba(13,110,253,0.02));
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media (max-width: 767px) {
+  .big-number { font-size: 1.6rem; }
+  .metric-list { gap: 6px; }
 }
+
+.sidebar a { color: var(--accent); text-decoration: none; }
+.sidebar a:hover { text-decoration: underline; }
+
+.slider-group { width: 200px; max-width: 40vw; }
+
+.profit-controls .slider-group input[type='range'] { accent-color: var(--accent); }
+
+.token-name { font-family: Inter, 'Segoe UI', Roboto, system-ui; }
+
+footer {
+  font-size: 0.9em;
+  color: var(--muted);
+}
+
+/* Rounded buttons, transitions and subtle animations */
+button, .btn {
+  border-radius: 12px !important;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+
+input[type='range'] { transition: all 0.12s ease; }
+
+.profit-table.attractive tbody tr:nth-child(odd) {
+  background: var(--table-row);
+}
+
+[data-theme='dark'] .profit-table.attractive tbody tr { color: var(--text); }
+
+.card { transition: transform 0.14s ease, box-shadow 0.14s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(2,6,23,0.08); }
+
+/* Make sliders visually smaller on narrow screens */
+@media (max-width: 576px) {
+  .slider-group { width: 140px; }
+}
+
+/* Improve contrast on dark mode for small muted text */
+[data-theme='dark'] .text-muted { color: rgba(230,238,248,0.75) !important; }
+
+/* Map common bootstrap utility classes to theme-aware colors */
+.text-muted { color: var(--muted) !important; }
+.text-success { color: var(--success) !important; }
+.text-danger { color: var(--danger) !important; }
+.text-primary { color: var(--accent) !important; }
+
+/* Tables and cells should use theme text color */
+.table, .table th, .table td { background: transparent; color: var(--text); }
+.table thead th { color: var(--muted); }
+
+/* Make outline light buttons readable in dark theme */
+[data-theme='dark'] .btn-outline-light {
+  color: var(--text) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+  background: transparent !important;
+}
+
+/* Ensure small muted text in cards is readable */
+.card .small.text-muted { color: var(--muted) !important; }
+
