@@ -162,6 +162,28 @@ input[type='range'] { transition: all 0.12s ease; }
   .slider-group { width: 140px; }
 }
 
+/* Mobile: stack profit controls and make sliders full width */
+@media (max-width: 768px) {
+  .profit-controls { flex-direction: column !important; align-items: flex-start; gap: 12px; }
+  .profit-controls .slider-group { width: 100% !important; max-width: 100%; }
+  .profit-controls .text-end { text-align: left !important; }
+
+  /* Allow tables to horizontally scroll on very small screens */
+  .table-responsive, .table-responsive table { width: 100%; }
+  .table-responsive { overflow-x: auto; }
+
+  /* Slightly larger touch targets */
+  .slider-group input[type='range'] { height: 28px; }
+}
+
+/* Make profit table rows a little nicer on small screens */
+@media (max-width: 480px) {
+  .profit-table.attractive thead { display: none; }
+  .profit-table.attractive tbody tr { display: block; margin-bottom: 12px; border-radius: 8px; padding: 10px; background: var(--card-bg); box-shadow: 0 6px 18px rgba(2,6,23,0.04); }
+  .profit-table.attractive tbody td { display: flex; justify-content: space-between; padding: 6px 8px; }
+  .profit-table.attractive tbody td::before { display: none; }
+}
+
 /* Improve contrast on dark mode for small muted text */
 [data-theme='dark'] .text-muted { color: rgba(230,238,248,0.75) !important; }
 

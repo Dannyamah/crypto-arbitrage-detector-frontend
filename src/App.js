@@ -12,6 +12,7 @@ import {
   Alert,
   Navbar,
   ProgressBar,
+  Offcanvas,
 } from 'react-bootstrap';
 import { FaSync, FaChartLine, FaInfoCircle, FaSun, FaMoon, FaTelegramPlane, FaTwitter, FaChevronUp, FaChevronDown } from 'react-icons/fa';
 import './App.css';
@@ -33,6 +34,7 @@ function App() {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
   const [showAll, setShowAll] = useState(false);
   const [investment, setInvestment] = useState(1000);
+  const [showSidebar, setShowSidebar] = useState(false);
 
   const fetchArbitrageData = async () => {
     setLoading(true);
@@ -157,7 +159,8 @@ function App() {
 
       <Container fluid className="app-container">
         <Row>
-          <Col lg={3} className="sidebar">
+          {/* Desktop sidebar (visible on lg and up) */}
+          <Col lg={3} className="sidebar d-none d-lg-block">
             <Card className="mb-3">
               <Card.Body>
                 <Card.Title>
@@ -178,7 +181,57 @@ function App() {
                 </div>
               </Card.Body>
             </Card>
+          </Col>
 
+          {/* Mobile: Offcanvas sidebar trigger */}
+          <Col xs={12} className="d-block d-lg-none mb-3">
+            <div className="d-flex justify-content-between align-items-center">
+              <h4 className="mb-0">Dashboard</h4>
+              <div>
+                <Button variant="outline-primary" onClick={() => setShowSidebar(true)}>Menu</Button>
+              </div>
+            </div>
+          </Col>
+
+          {/* Offcanvas for mobile sidebar */}
+          <Offcanvas show={showSidebar} onHide={() => setShowSidebar(false)} placement="start">
+            <Offcanvas.Header closeButton>
+              <Offcanvas.Title>Menu</Offcanvas.Title>
+            </Offcanvas.Header>
+            <Offcanvas.Body>
+              <Card className="mb-3">
+                <Card.Body>
+                  <Card.Title>About</Card.Title>
+                  <Card.Text className="small text-muted">Monitors real-time arbitrage across major exchanges for USDT pairs. The dashboard highlights potential price differences between exchanges and provides quick profit estimates. Data is informational.</Card.Text>
+                </Card.Body>
+              </Card>
+              <Card className="mb-3">
+                <Card.Body>
+                  <Form.Group className="mb-2">
+                    <Form.Label>Search tokens / exchanges</Form.Label>
+                    <Form.Control placeholder="e.g. BTC, Binance" value={query} onChange={(e) => setQuery(e.target.value)} />
+                  </Form.Group>
+                  <div className="d-flex gap-2 mt-3">
+                    <Button variant="primary" onClick={() => setSortBy({ key: 'price_diff_pct', desc: true })}>Sort: Spread</Button>
+                    <Button variant="outline-secondary" onClick={() => setSortBy({ key: 'profit_per_1000_usd', desc: true })}>Sort: Profit</Button>
+                  </div>
+                </Card.Body>
+              </Card>
+              <Card>
+                <Card.Body>
+                  <div className="d-flex align-items-center gap-2">
+                    <FaTelegramPlane />
+                    <a href="https://t.me/arb_spotter_bot" target="_blank" rel="noreferrer">Telegram Bot</a>
+                  </div>
+                  <hr />
+                  <div className="small text-muted">Built by <a href="https://x.com/danny_4reel" target="_blank" rel="noreferrer">Daniel Amah</a>, for educational purposes.</div>
+                </Card.Body>
+              </Card>
+            </Offcanvas.Body>
+          </Offcanvas>
+
+          {/* Sidebar content for large screens (metrics + links) */}
+          <Col lg={3} className="sidebar d-none d-lg-block">
             <Card>
               <Card.Body>
                 <Card.Title>Metrics</Card.Title>
