@@ -13,7 +13,7 @@ import {
   Navbar,
   ProgressBar,
 } from 'react-bootstrap';
-import { FaSync, FaChartLine, FaArrowDown, FaArrowUp, FaDollarSign, FaInfoCircle, FaSort, FaTelegramPlane, FaTwitter, FaMoon, FaSun, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaSync, FaChartLine, FaInfoCircle } from 'react-icons/fa';
 import './App.css';
 
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -219,6 +219,8 @@ function App() {
                 <p className="text-muted small">Filtered: {sorted.length} • Showing best first</p>
               </Col>
             </Row>
+
+            {error && <Alert variant="danger" className="mb-4">{error}</Alert>}
 
             {sorted.length === 0 ? (
               <Alert variant="warning">No opportunities match your filters.</Alert>
